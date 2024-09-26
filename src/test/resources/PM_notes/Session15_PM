@@ -1,0 +1,105 @@
+SESSION 15: Notes
+   **************************************************************
+   to integrate and run the collections at org leverl
+   ---------------------2 ways
+   1. to move the collections onto github.com from where jenkins job
+   would pick up-with the url specified and run the collection
+   2. Move the collection json file on to jenkins dashboard and create  a job and run the collection
+   ----how to integrate newman with jenkins??
+   so far we have been running newman from cmd prompt/cli
+   using the cmd
+   newman run collectionName -e envName --verbose
+   ----after exporting the collec + env from PM dashboard to the LFS
+   ----changing the directory from cmd line and staying inside the folder
+   where the collection exist and then running the newman run cmd
+   ----now we will see how to run the same cmd like in jenkins
+   what is the advantage of usage of jenkins???
+   we can create the jobs to run the coll's whenever we want to
+   ---any one in the team can open the jenkins, run the coll and share the
+   results with other team members
+   And we can integrate with CICD pipeline also
+   What is the advantage of integration of pm colls with jenkins??
+   We can create the jobs as and when required and run the colls from
+   jenkins server--so every one from the team gets to do that when
+   requrired, to get the reports from jenkins and analyse the reports
+   --can integrate with CICD pipelines
+   HOW TO SET UP JENKINS AND CREATE A JOB CONFIGURATION??
+   create a free style job on jenkins and run the job
+   WAR: is also a form of java technology-web archive file
+
+   How to install jenkins?? jdk 11, 17, OR 21 is mandatory
+   installation link:
+
+   go to google: write download jenkins war-go to war pkgs
+
+   to run jenkins.war file
+   java -jar jenkins.war
+   ----------to remove weird coutput on jenkins--
+   open cmd ---ctrl+c ---terminates
+   cls --clears the screen
+   ALWAYS START UR JENKINS WITH THE BELOW CMD^^^^^^^^^^^^^^
+   java  -Dfile.encoding=UTF-8 -jar jenkins.war
+
+   after running the above cmd, 
+   ---will see the mesg 'Jenkins is up and running' on cmd line
+   open the browser and hit local host:8080
+   By default jenkins will be running on port no: 8080
+
+   http://localhost:8080/login?from%2F 
+
+   DO NOT ENTER CMD + C, CTRL+C, OR CLOSE THE CMD PROMPT--will
+   stop jenkins from running==> jenkins server will be terminated
+
+   ------once every thing is done --we have to proceed with jenkins
+   now we have the collections on the LFS-where postman_collections folder is
+   ---now our target is to run the coll's from jenkins server
+   --can be done in 2 ways 
+   1]--either by pushing the coll's on to Github-and get the url-create
+   a job on jenkins using the url and run the coll's
+   2]---OR directly create the workspace on jenkins server and provide the
+   path for the coll's + env's and create job and run the coll's directly
+   from jenkins
+   -----on google write-newman html 
+   click on link
+   newman-reporter-htmlextra
+   _________________________
+
+   to get the report(to look like the above one)--cmd to be used
+   npm install -g newman-reporter-htmlextra
+
+   how to set up the newman-reporter-htmlextra pkg in jenkins??
+   Goto Jenkins--->Dashboard--click on ManageJenkins---go to Tools tab
+   scroll down on the page--and click on NodeJSinstallations
+   -----in the field of Global npm pkges to install
+   previously we entered newman --besides it -give a space and enter
+   --newman-reporter-htmlextra 
+   *****now which flag do we have to supply 
+   newman run collection.json -r htmlextra
+   -------now go back to jenkins dashboard-go to the job u were working on
+   --here sampleAPIjob--configure--add besides json, htmlextra
+   apply-save
+   --Buildnow
+   -----after the job is run --chk the newman folder-to see the html report
+   BUT this html reports look and feel is not up to the mark
+   so we have to add an extra plugin--content security policy plugin
+
+   so on google-type 'download content security policy extension'
+   --click on this link
+   Disable Content-security policy-chrome webstore - Google
+
+   ---what exactly it does -is disable the CSP policy in the jenkins and
+   then all the look and feel will be properly visible over there
+   ---on that link --simply click on 'add to chrome'
+
+TO PARAMETERIZE: the job
+   copying the cmd from jobname--configure
+
+=======================
+   newman run C://Users//binduk//Documents//JulyEleAPIbatch//NewSample15_coll.json -e C://Users//binduk//Documents//JulyEleAPIbatch//newGoRest_env.json -n 3 -r cli,htmlextra 
+
+----------------how to parameterize
+to do this
+click on this chk box
+This project is parameterized-----configuration -- in the General section--
+then click on Add Parameter dropdown--select string parameter
+

@@ -1,0 +1,108 @@
+SESSION 16: Notes
+**********************************
+How to integrate Git with Jenkins?? 2nd way
+-----------------------------
+Move all the json files to the GitHub, remote repo
+then create a url for the repo
+Jenkins server: creates a WS and picks the github url to run the tc's
+Go to Jenkins workspace-create a free style prj-job providing the Git url
+Give the description, scroll down and give the SCM as Git
+provide the Repository Url, provide that the code is available-in master
+select for windows-windows batch cmd
+for mac -- select shell 
+-------provide the parameters with the cmd as follows to run coll locally
+newman run sample_api.json -e sample_env.json -n 3 -r htmlextra,cli,html
+
+Provide the same cmd in the cmd field on Jenkins with ./ for dir
+
+newman run ./sample_api.json -e ./sample_env.json -n 3 -r 
+htmlextra,cli,html
+-------------TO REMOVE HARDCODED FILENAMES--PARAMETERISE USING $
+
+##################for me there are these errors
+---some encoded weird strings in the output
+---my json files not picked by Github
+
+---TO SHEDULE THE JOBS PERIODICALLY ON JENKINS:
+go to Build triggers section of the configure-job on jenkins dashboard
+chk the chkbox-Build periodically
+----now write some cmd syntactically like below
+CRON JOBS: At what time the job needs to be run,on what days etc --any kind
+of scheduling can be done using cron jobs
+There are 5 types of scheduling-could be done:5 pointer in the CRON JOB:IQ]
+1. MINUTES Minutes in one hour(0-59)
+2. HOURS Hours in one day(0-23)
+3. DAYMONTH Day in a Month(1-31)
+4. MONTH Month in a Year(1-12)
+5. DAYWEEK Day of the week(0-7) where o and 7 are sunday
+
+if you want to schedule ur build every 5 mts, this will do the job 
+*/5 * * * *
+if you want to schedule ur build every day at 8h00, this will do the job
+0 8 * * *
+------------	FIXES FOR ABOVE ISSUES
+
+clear the jenkins cache and restart jenkins
+
+TO ALLOW PERIODICALLY SCHEDULED TASKS TO PRODUCE EVEN LOAD ON THE SYSTEM, THE SYMBOL H (for hash) should be used wherever possible
+
+PIPELINE CREATION: Newman PipeLine
+----------what is the purpose of writing the collection???
+all the environment staged PipeLines could be created -until the code
+deployment into production --and testruns could be executed in all 
+environments
+==> each PL dedicated to each environment
+DEv + QA --2 repos on the GitHub
+Automation Collection Repo--QAs
+BUILD: could be a Jar/War file npm php dil 
+Jenkins PL: is a jenkins file-the syntax provided by dedicated jenkins team--where DECLARATIVE PIPELINE Syntax--which should be used in the 
+provided templates--TO DO THIS
+----On jenkins DashBoard
+Click on + icon --to create a Job
+select PIPELINe
+
+HOW TO CREATE A JENKINS PIPELINE????
+-----is created using a file called Jenkinsfile--this file has no extension--has to be created using syntax-Declarative PL syntax
+--they give some templates of declarative syntax--which needs to be used
+--on Jenkins dashboard--click on + icon to create a new job
+--select Pipeline--give some name-click ok, give some description, scroll
+down to the field--Pipeline script
+---how does this script look like
+--starts with pipeline{}--and has diff stages--3
+stage('Checkout'){}
+stage('Run Newman'){}
+stage('Publish HTML Extra Report'){}
+with steps{ } ---inside each stage
+
+GIT: cmds used to push collection.json, env.json files from LFS
+git init
+git remote add origin https://githuburl
+git status
+git add .
+git remote -v output shows that you have a remote repository correctly set up:
+git commit -m "message"
+git push origin main/master
+---can add more stages to the pipeline script as well
+IQ] How many stages are there in PL syntax?? 3 and more can be added 
+IQ] Tell me about your postman process
+
+CRONJOB: means whenever i have to do processing, batch jobs-which uses
+some specialized syntax to run the jobs with scheduling--with 5pts
+MINUTES, HOURS, DAYMONTH, MONTH, DAYWEEK
+eg: all the banks transactions at the end of the day-and updating the 
+accounts data by the end of the day
+
+IQ] 5 pointers for the cronjob in jenkins????
+minutes, hours, daymonth, month, dayweek
+
+--which given in the build periodically tab of the job 
+*H/5*****
+-----with the jenkins, and newman can create the pipeline-How to
+--
+
+
+what is the purpose of writing the collection??
+every one from the team is writing and pushing the code to dev repository
+then the build is deployed to the qa environment
+after deployment --the collections(pm) should be run-so create a pipeline
+and run the pm collections
